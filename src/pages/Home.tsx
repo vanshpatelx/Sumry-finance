@@ -1,7 +1,7 @@
 import React from 'react';
 import { BarChart3, Shield, Users, CheckCircle2, ArrowDown, ArrowRight, Quote } from 'lucide-react';
 import { Button } from '../components/Button';
-import { SERVICES, VALUES, PROCESS_STEPS, STATS, TESTIMONIALS } from '../constants';
+import { SERVICES, VALUES, PROCESS_STEPS, STATS, TESTIMONIALS } from '../../constants';
 import { LeadForm } from '../components/LeadForm';
 
 export const Home: React.FC = () => {
