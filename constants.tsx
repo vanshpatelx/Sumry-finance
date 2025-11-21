@@ -15,6 +15,7 @@ export const NAV_ITEMS: NavItem[] = [
   { label: 'Partner Portal', path: '/portal' },
 ];
 
+
 export const STATS = [
   { label: "Loan Value Managed", value: "$250M+" },
   { label: "Strategies Built", value: "500+" },
