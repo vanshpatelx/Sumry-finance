@@ -67,7 +67,7 @@ export default function Hero() {
   };
 
   return (
-    <div id='home' className="relative min-h-screen 2xl:min-h-full text-[#F7F7F7] overflow-hidden">
+    <div id='home' className="relative min-h-screen 2xl:min-h-[90vh] text-[#F7F7F7] overflow-hidden">
 
       {/* Background Image */}
       <div className="absolute inset-0 -z-10">
@@ -82,24 +82,24 @@ export default function Hero() {
       <div className="absolute inset-0 bg-[#00000080]  -z-10" />
       {/* Navigation */}
       <nav
-        className={`fixed top-0 w-full z-50 border-b py-4  transition-all duration-300
-    ${isScrolled || isMenuOpen ? "bg-[#F7F7F7] shadow-md text-[black] border-zinc-300" : "bg-transparent text-[#F7F7F7] border-[#F7F7F7]/20"}
-  `}
+        className={`fixed top-0 w-full z-50 border-b py-4 transition-all duration-300
+      ${isScrolled || isMenuOpen ? "bg-[#F7F7F7] shadow-md text-[black] border-zinc-300" : "bg-transparent text-[#F7F7F7] border-[#F7F7F7]/20"}
+    `}
       >
-        <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-10 xl:px-0">
-          <div className="flex items-center justify-between h-18">
+        <div className="max-w-6xl 2xl:max-w-7xl 2xl:max-w-8xl mx-auto px-4 md:px-8 lg:px-10 xl:px-0 2xl:px-8">
+          <div className="flex items-center justify-between h-18 2xl:h-24">
             {/* Logo */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className={`relative inline-flex items-end gap-1.5 shrink-0 text-2xl font-light ${isScrolled || isMenuOpen ? "text-black" : "text-[#F7F7F7]"
+              className={`relative inline-flex items-end gap-1.5 shrink-0 text-2xl 2xl:text-3xl font-light ${isScrolled || isMenuOpen ? "text-black" : "text-[#F7F7F7]"
                 }`}
             >
               <span className="logo leading-none cursor-pointer" title='Sumry Finance'>Sumry Finance</span>
               {/* dot */}
               <span
-                className={`w-2 h-2 rounded-full mb-1 ${isScrolled || isMenuOpen ? "bg-[#0F3D3A]" : "bg-[#C8F8A9]"
+                className={`w-2 h-2 2xl:w-3 2xl:h-3 rounded-full mb-1 ${isScrolled || isMenuOpen ? "bg-[#0F3D3A]" : "bg-[#C8F8A9]"
                   }`}
               ></span>
             </motion.div>
@@ -109,13 +109,14 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="hidden md:flex items-center space-x-4"
+              className="hidden md:flex items-center space-x-4 2xl:space-x-6"
             >
               {navItems.map((item) => (
                 <a
                   key={item}
                   href={`#${item.toLowerCase()}`}
-                  className={`text-sm p-1 px-3 rounded-full font-medium transition-colors ${isScrolled || isMenuOpen ? "text-[#272727] hover:bg-[#272727] hover:text-[#F7F7F7]" : 'text-white  hover:text-[#272727] hover:bg-[#F7F7F7]'}`}
+                  className={`text-sm 2xl:text-base p-1 px-3 2xl:px-4 rounded-full font-medium transition-colors ${isScrolled || isMenuOpen ? "text-[#272727] hover:bg-[#272727] hover:text-[#F7F7F7]" : 'text-white  hover:text-[#272727] hover:bg-[#F7F7F7]'
+                    }`}
                 >
                   {item}
                 </a>
@@ -127,9 +128,10 @@ export default function Hero() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className="hidden lg:flex items-center space-x-4"
+              className="hidden lg:flex items-center space-x-4 2xl:space-x-6"
             >
-              <button type='button' className="px-3.5 py-2 rounded-[8px]  bg-[#F7F7F7] hover:border-gray-400 text-[#272727] transition-colors text-sm font-medium cursor-pointer hover:text-[#F7F7F7] hover:bg-[#0F3D3A]">
+              <button type='button' className={`px-3.5 py-2 2xl:px-5 2xl:py-3 rounded-[8px] bg-[#F7F7F7] hover:border-gray-400 text-[#272727] transition-colors text-sm 2xl:text-base font-medium cursor-pointer hover:text-[#F7F7F7] hover:bg-[#0F3D3A] ${isScrolled || isMenuOpen ? "border border-[#272727]" : "border-none"
+                }`}>
                 Get Strategy
               </button>
             </motion.div>
@@ -175,25 +177,25 @@ export default function Hero() {
       </nav>
 
       {/* Hero Section */}
-      <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-10 xl:px-0 py-24 mt-[24px] sm:mt-[40px]">
+      <div className="max-w-6xl 2xl:max-w-7xl 2xl:max-w-8xl mx-auto px-4 md:px-8 lg:px-10 xl:px-0 2xl:px-8 py-24 2xl:py-32 mt-[24px] sm:mt-[40px] 2xl:mt-[60px]">
         <div className="">
-          <div className="grid grid-cols-1 lg:grid-cols-1 gap-8 lg:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-1 gap-8 lg:gap-12 2xl:gap-16 items-center">
             {/* Left Content */}
             <motion.div
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="space-y-4"
+              className="space-y-4 2xl:space-y-6"
             >
               {/* Badge */}
               <motion.div
                 variants={badgeVariants}
-                className="w-fit flex items-center gap-3 py-2 shrink-0 rounded-lg"
+                className="w-fit flex items-center gap-3 2xl:gap-4 py-2 shrink-0 rounded-lg"
               >
-                <span className="px-2 py-1 bg-[#EBEBEB] text-[#0F3D3A] rounded text-xs sm:text-[14px] font-medium text-nowrap">
+                <span className="px-2 py-1 bg-[#EBEBEB] text-[#0F3D3A] rounded text-xs sm:text-[14px] 2xl:text-base font-medium text-nowrap">
                   Strategic Lending
                 </span>
-                <span className="text-[14px] text-[#F7F7F7] text-nowrap">
+                <span className="text-[14px] 2xl:text-lg text-[#F7F7F7] text-nowrap">
                   Clarity in Complexity
                 </span>
               </motion.div>
@@ -201,18 +203,17 @@ export default function Hero() {
               {/* Main Heading */}
               <motion.div
                 variants={itemVariants}
-                className="space-y-2"
+                className="space-y-2 2xl:space-y-4"
               >
-                <h1 className="logo text-5xl xs:text-6xl sm:text-6xl  lg:text-[84px] font-serif font-light leading-tighter tracking-tight text-[#F7F7F7]">
+                <h1 className="logo text-5xl xs:text-6xl sm:text-6xl lg:text-[84px] 2xl:text-[120px] font-serif font-light leading-tighter tracking-tight text-[#F7F7F7]">
                   Smarter Lending, <br className='hidden sm:block' />Built Strategically
                 </h1>
-                {/* <div className="h-[0.2px] lg:w-6xl bg-gray-100/20 rounded-full" /> */}
               </motion.div>
 
               {/* Description */}
               <motion.p
                 variants={itemVariants}
-                className="text-sm sm:text-[18px] text-[#F7F7F7] max-w-lg w-full leading-normal tracking-tight"
+                className="text-sm sm:text-[18px] 2xl:text-xl text-[#F7F7F7] max-w-lg 2xl:max-w-2xl w-full leading-normal tracking-tight"
               >
                 A numbers-driven lending approach built on expertise, partnership, and long-term financial clarity—not just cheaper rates.
               </motion.p>
@@ -223,13 +224,12 @@ export default function Hero() {
                 variants={itemVariants}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.95 }}
-                className="group flex items-center gap-3 px-3.5 py-2.5 bg-[#F7F7F7] text-black rounded-[8px] text-[14px] font-medium hover:bg-[#C8F8A9] hover:text-[#0F3D3A] transition-colors cursor-pointer"
+                className="group flex items-center gap-3 px-3.5 py-2.5 2xl:px-5 2xl:py-3.5 bg-[#F7F7F7] text-black rounded-[8px] text-[14px] 2xl:text-base font-medium hover:bg-[#C8F8A9] hover:text-[#0F3D3A] transition-colors cursor-pointer"
               >
                 Get Your Strategy
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 2xl:w-5 2xl:h-5 group-hover:translate-x-1 transition-transform" />
               </motion.button>
             </motion.div>
-
           </div>
 
           {/* Mobile Image */}
@@ -244,7 +244,7 @@ export default function Hero() {
       </div>
 
       {/* Background Elements */}
-      <div className="max-w-7xl absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
+      {/* <div className="max-w-7xl absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
         <motion.div
           animate={{
             scale: [1, 1.1, 1],
@@ -270,7 +270,7 @@ export default function Hero() {
           }}
           className="absolute bottom-1/4 left-0 w-96 h-96 bg-lime-400/5 rounded-full blur-3xl"
         />
-      </div>
+      </div> */}
     </div>
   )
 }
