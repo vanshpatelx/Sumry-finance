@@ -145,28 +145,136 @@ export  const imageVariants: Variants = {
     },
   };
 
-      // Animation variants
-  export  const stepVariants = {
-        enter: { x: 300, opacity: 0 },
-        center: { x: 0, opacity: 1 },
-        exit: { x: -300, opacity: 0 }
-    };
+export const slideInFromLeft: Variants = {
+  hidden: { x: -100, opacity: 0 },
+  visible: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut"
+    }
+  }
+};
 
+export const slideInFromRight: Variants = {
+  hidden: { x: 100, opacity: 0 },
+  visible: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut"
+    }
+  }
+};
 
-  export  const slideInFromLeft: Variants = {
-        hidden: { opacity: 0, x: -50 },
-        visible: {
-            opacity: 1,
-            x: 0,
-            transition: { duration: 0.7, ease: "easeOut" },
-        },
-    };
+export const stepVariants: Variants = {
+  enter: { x: 300, opacity: 0 },
+  center: { x: 0, opacity: 1 },
+  exit: { x: -300, opacity: 0 }
+};
 
-  export  const slideInFromRight: Variants = {
-        hidden: { opacity: 0, x: 50 },
-        visible: {
-            opacity: 1,
-            x: 0,
-            transition: { duration: 0.7, ease: "easeOut" },
-        },
-    };
+// Form Data Types
+export interface FormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  company: string;
+  jobTitle: string;
+  timeline: string;
+  loanType: string;
+  investmentExperience: string;
+  message: string;
+}
+
+export interface FormErrors {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  timeline?: string;
+  loanType?: string;
+  message?: string;
+}
+
+// Validation Functions
+export const validateEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
+export const validatePhone = (phone: string): boolean => {
+  const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+  return phoneRegex.test(phone.replace(/[\s\-\(\)]/g, ''));
+};
+
+export const validateStep1 = (data: FormData): FormErrors => {
+  const errors: FormErrors = {};
+
+  if (!data.firstName.trim()) {
+    errors.firstName = 'First name is required';
+  } else if (data.firstName.length < 2) {
+    errors.firstName = 'First name must be at least 2 characters';
+  }
+
+  if (!data.lastName.trim()) {
+    errors.lastName = 'Last name is required';
+  } else if (data.lastName.length < 2) {
+    errors.lastName = 'Last name must be at least 2 characters';
+  }
+
+  if (!data.email.trim()) {
+    errors.email = 'Email is required';
+  } else if (!validateEmail(data.email)) {
+    errors.email = 'Please enter a valid email address';
+  }
+
+  if (!data.phone.trim()) {
+    errors.phone = 'Phone number is required';
+  } else if (!validatePhone(data.phone)) {
+    errors.phone = 'Please enter a valid phone number';
+  }
+
+  return errors;
+};
+
+export const validateStep2 = (data: FormData): FormErrors => {
+  const errors: FormErrors = {};
+
+  if (!data.timeline) {
+    errors.timeline = 'Please select your preferred timeline';
+  }
+
+  if (!data.loanType) {
+    errors.loanType = 'Please select a loan type';
+  }
+
+  return errors;
+};
+
+export const validateStep3 = (data: FormData): FormErrors => {
+  const errors: FormErrors = {};
+
+  if (!data.message.trim()) {
+    errors.message = 'Please tell us about your financial goals';
+  } else if (data.message.length < 10) {
+    errors.message = 'Please provide more details about your goals (minimum 10 characters)';
+  }
+
+  return errors;
+};
+
+export const validateCurrentStep = (currentStep: number, data: FormData): FormErrors => {
+  switch (currentStep) {
+    case 1:
+      return validateStep1(data);
+    case 2:
+      return validateStep2(data);
+    case 3:
+      return validateStep3(data);
+    default:
+      return {};
+  }
+};

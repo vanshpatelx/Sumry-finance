@@ -155,6 +155,7 @@ export default function ServiceDetails() {
                 <Link
                   key={relatedService.id}
                   to={`/services/${relatedService.id}`}
+                  onClick={() => window.scrollTo(0, 0)}
                   className="p-4 rounded-[8px] border border-gray-200 hover:border-[#0F3D3A] hover:bg-[#F7F7F7] transition-colors group"
                 >
                   <h3 className="font-semibold text-[#0F3D3A] group-hover:text-[#0f3d3adc]">

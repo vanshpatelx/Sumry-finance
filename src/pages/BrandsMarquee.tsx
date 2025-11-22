@@ -32,7 +32,7 @@ const logos = [
 export default function LogoMarquee() {
   return (
     <div className="w-full flex justify-center px-4 py-10 bg-[#F7F7F7]">
-      <div className="relative w-full max-w-7xl bg-white rounded-2xl shadow-sm border border-black/5 p-6 flex items-center gap-6 overflow-hidden">
+      <div className="relative w-full max-w-6xl mx-auto bg-white rounded-2xl shadow-sm p-6 flex items-center gap-6 overflow-hidden">
 
         {/* Left Text */}
         <p className="text-lg font-medium text-gray-500 leading-tight whitespace-nowrap hidden md:block">

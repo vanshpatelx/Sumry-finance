@@ -14,6 +14,7 @@ import AboutSection from './pages/About.tsx'
 import ServicesSection from './pages/Services.tsx'
 import ServiceDetails from './pages/ServiceDetails.tsx'
 import ServicesPage from './pages/ServicePage.tsx'
+import StrategySection from './pages/StrategySection.tsx'
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
                 <LogoMarquee />
                 <AboutSection />
                 <ServicesSection />
+                <StrategySection/>
                 <TeamSection />
                 <ContactSection />
               </>

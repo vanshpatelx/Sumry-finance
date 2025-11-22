@@ -11,7 +11,7 @@ export default function Hero() {
   const navigate = useNavigate();
 
   return (
-    <div id='home' className="relative min-h-screen 2xl:min-h-[90vh] text-[#F7F7F7] overflow-hidden">
+    <div id='home' className="relative min-h-screen 2xl:min-h-[100vh] text-[#F7F7F7] overflow-hidden">
 
       {/* Background Image */}
       <div className="absolute inset-0 -z-10">
@@ -28,7 +28,7 @@ export default function Hero() {
       <Navbar/>
 
       {/* Hero Section */}
-      <div className="max-w-6xl 2xl:max-w-7xl 2xl:max-w-8xl mx-auto px-4 md:px-8 lg:px-10 xl:px-0 2xl:px-8 py-24 2xl:py-32 mt-[24px] sm:mt-[40px] 2xl:mt-[60px]">
+      <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-10 xl:px-0 2xl:px-0 py-24 2xl:py-32 mt-[24px] sm:mt-[40px] 2xl:mt-96">
         <div className="">
           <div className="grid grid-cols-1 lg:grid-cols-1 gap-8 lg:gap-12 2xl:gap-16 items-center">
             {/* Left Content */}
@@ -36,14 +36,14 @@ export default function Hero() {
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="space-y-4 2xl:space-y-6"
+              className="space-y-4 2xl:space-y-8"
             >
               {/* Badge */}
               <motion.div
                 variants={badgeVariants}
                 className="w-fit flex items-center gap-3 2xl:gap-4 py-2 shrink-0 rounded-lg"
               >
-                <span className="px-2 py-1 bg-[#EBEBEB] text-[#0F3D3A] rounded text-xs sm:text-[14px] 2xl:text-base font-medium text-nowrap">
+                <span className="px-2 py-1 bg-[#EBEBEB] text-[#0F3D3A] rounded text-xs sm:text-[14px] 2xl:text-lg font-medium text-nowrap">
                   Strategic Lending
                 </span>
                 <span className="text-[14px] 2xl:text-lg text-[#F7F7F7] text-nowrap">
@@ -56,7 +56,7 @@ export default function Hero() {
                 variants={itemVariants}
                 className="space-y-2 2xl:space-y-4"
               >
-                <h1 className="logo text-5xl xs:text-6xl sm:text-6xl lg:text-[84px] 2xl:text-[120px] font-serif font-light leading-tighter tracking-tight text-[#F7F7F7]">
+                <h1 className="logo text-5xl xs:text-6xl sm:text-6xl lg:text-[84px] 2xl:text-[140px] font-serif font-light leading-tighter tracking-tight text-[#F7F7F7]">
                   Smarter Lending, <br className='hidden sm:block' />Built Strategically
                 </h1>
               </motion.div>
@@ -64,7 +64,7 @@ export default function Hero() {
               {/* Description */}
               <motion.p
                 variants={itemVariants}
-                className="text-sm sm:text-[18px] 2xl:text-xl text-[#F7F7F7] max-w-lg 2xl:max-w-2xl w-full leading-normal tracking-tight"
+                className="text-sm sm:text-[18px] 2xl:text-2xl text-[#F7F7F7] max-w-lg 2xl:max-w-3xl w-full leading-normal tracking-tight"
               >
                 A numbers-driven lending approach built on expertise, partnership, and long-term financial clarity—not just cheaper rates.
               </motion.p>
@@ -76,10 +76,10 @@ export default function Hero() {
                 onClick={() => navigate('/contact')}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.95 }}
-                className="group flex items-center gap-3 px-3.5 py-2.5 2xl:px-5 2xl:py-3.5 bg-[#F7F7F7] text-black rounded-[8px] text-[14px] 2xl:text-base font-medium hover:bg-[#C8F8A9] hover:text-[#0F3D3A] transition-colors cursor-pointer"
+                className="group flex items-center gap-3 px-3.5 py-2.5 2xl:px-6 2xl:py-4.5 bg-[#F7F7F7] text-black rounded-[8px] text-[14px] 2xl:text-lg font-medium hover:bg-[#C8F8A9] hover:text-[#0F3D3A] transition-colors cursor-pointer"
               >
                 Get Your Strategy
-                <ArrowRight className="w-4 h-4 2xl:w-5 2xl:h-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 2xl:w-6 2xl:h-6 group-hover:translate-x-1 transition-transform" />
               </motion.button>
             </motion.div>
           </div>

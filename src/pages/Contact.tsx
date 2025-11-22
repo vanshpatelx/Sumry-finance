@@ -1,55 +1,108 @@
 import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence, Variants } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Phone, MapPin, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
-import { containerVariants, itemVariants, slideInFromLeft, slideInFromRight, stepVariants } from "@/components/data";
-
+import {
+    containerVariants,
+    itemVariants,
+    slideInFromLeft,
+    slideInFromRight,
+    stepVariants,
+    FormData,
+    FormErrors,
+    validateCurrentStep
+} from "../components/data.tsx";
 
 export default function ContactSection() {
-    const [currentStep, setCurrentStep] = useState(1);
-    const [formData, setFormData] = useState({
-        // Step 1 - Personal Information
+    const [currentStep, setCurrentStep] = useState<number>(1);
+    const [formData, setFormData] = useState<FormData>({
         firstName: '',
         lastName: '',
         email: '',
         phone: '',
-
-        // Step 2 - Professional Details
         company: '',
         jobTitle: '',
-        loanType: '',
-
-        // Step 3 - Financial Goals
-        message: '',
         timeline: '',
-        investmentExperience: ''
+        loanType: '',
+        investmentExperience: '',
+        message: ''
     });
 
-     useEffect(() => {
-            window.scrollTo(0, 0);
-        }, []);
+    const [submitted, setSubmitted] = useState<boolean>(false);
+    const [errors, setErrors] = useState<FormErrors>({});
+    const [touched, setTouched] = useState<Set<string>>(new Set());
 
-    const [submitted, setSubmitted] = useState(false);
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
 
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+        // Mark field as touched
+        setTouched(prev => new Set(prev).add(name));
+
+        // Clear error when user starts typing
+        if (errors[name as keyof FormErrors]) {
+            setErrors(prev => ({
+                ...prev,
+                [name]: undefined
+            }));
+        }
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setSubmitted(true);
-        setTimeout(() => setSubmitted(false), 3000);
+    const validateStep = (): boolean => {
+        const stepErrors = validateCurrentStep(currentStep, formData);
+        setErrors(stepErrors);
+        return Object.keys(stepErrors).length === 0;
     };
 
     const nextStep = () => {
-        setCurrentStep(prev => Math.min(prev + 1, 3));
+        if (validateStep()) {
+            setCurrentStep(prev => Math.min(prev + 1, 3));
+        }
     };
 
     const prevStep = () => {
         setCurrentStep(prev => Math.max(prev - 1, 1));
+        setErrors({});
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (validateStep()) {
+            // Submit logic here
+            console.log('Form submitted:', formData);
+            setSubmitted(true);
+
+            // Reset form after submission
+            setTimeout(() => {
+                setFormData({
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    phone: '',
+                    company: '',
+                    jobTitle: '',
+                    timeline: '',
+                    loanType: '',
+                    investmentExperience: '',
+                    message: ''
+                });
+                setCurrentStep(1);
+                setSubmitted(false);
+                setErrors({});
+                setTouched(new Set());
+            }, 3000);
+        }
+    };
+
+    const getFieldError = (fieldName: keyof FormErrors): string | undefined => {
+        return touched.has(fieldName) ? errors[fieldName] : undefined;
     };
 
     // Progress bar calculation
@@ -97,7 +150,6 @@ export default function ContactSection() {
                         alt="bg"
                     />
                 </div>
-
 
                 {/* Main Content */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 absolute -top-8 md:-top-13.5 left-0 right-0 px-4 md:px-8 lg:px-10 xl:px-0">
@@ -218,7 +270,7 @@ export default function ContactSection() {
                         </div>
 
                         {/* Form */}
-                        <form onSubmit={handleSubmit} className="p-4 sm:p-6 md:p-8">
+                        <form onSubmit={handleSubmit} className="p-4 sm:p-6 md:p-8" noValidate>
                             <AnimatePresence mode="wait">
                                 {/* Step 1: Personal Information */}
                                 {currentStep === 1 && (
@@ -246,10 +298,16 @@ export default function ContactSection() {
                                                     name="firstName"
                                                     value={formData.firstName}
                                                     onChange={handleChange}
+                                                    onBlur={() => setTouched(prev => new Set(prev).add('firstName'))}
                                                     placeholder="John"
-                                                    className="w-full px-3 py-2 border border-gray-300 rounded-[6px] bg-[#F2F5F1] focus:outline-none focus:ring-[1px] focus:ring-[#0F3D3A] transition text-sm sm:text-base"
-                                                    required
+                                                    className={`w-full px-3 py-2 border rounded-[6px] bg-[#F2F5F1] focus:outline-none focus:ring-[1px] transition text-sm sm:text-base ${getFieldError('firstName')
+                                                            ? 'border-red-500 focus:ring-red-500'
+                                                            : 'border-gray-300 focus:ring-[#0F3D3A]'
+                                                        }`}
                                                 />
+                                                {getFieldError('firstName') && (
+                                                    <p className="text-red-500 text-xs mt-1">{getFieldError('firstName')}</p>
+                                                )}
                                             </motion.div>
 
                                             <motion.div variants={itemVariants} className="space-y-2">
@@ -261,10 +319,16 @@ export default function ContactSection() {
                                                     name="lastName"
                                                     value={formData.lastName}
                                                     onChange={handleChange}
+                                                    onBlur={() => setTouched(prev => new Set(prev).add('lastName'))}
                                                     placeholder="Smith"
-                                                    className="w-full px-3 py-2 border border-gray-300 bg-[#F2F5F1] rounded-[6px] focus:outline-none focus:ring-[1px] focus:ring-[#0F3D3A] transition text-sm sm:text-base"
-                                                    required
+                                                    className={`w-full px-3 py-2 border rounded-[6px] bg-[#F2F5F1] focus:outline-none focus:ring-[1px] transition text-sm sm:text-base ${getFieldError('lastName')
+                                                            ? 'border-red-500 focus:ring-red-500'
+                                                            : 'border-gray-300 focus:ring-[#0F3D3A]'
+                                                        }`}
                                                 />
+                                                {getFieldError('lastName') && (
+                                                    <p className="text-red-500 text-xs mt-1">{getFieldError('lastName')}</p>
+                                                )}
                                             </motion.div>
                                         </div>
 
@@ -277,10 +341,16 @@ export default function ContactSection() {
                                                 name="email"
                                                 value={formData.email}
                                                 onChange={handleChange}
+                                                onBlur={() => setTouched(prev => new Set(prev).add('email'))}
                                                 placeholder="john@email.com"
-                                                className="w-full px-3 py-2 border border-gray-300 bg-[#F2F5F1] rounded-[6px] focus:outline-none focus:ring-[1px] focus:ring-[#0F3D3A] transition text-sm sm:text-base"
-                                                required
+                                                className={`w-full px-3 py-2 border rounded-[6px] bg-[#F2F5F1] focus:outline-none focus:ring-[1px] transition text-sm sm:text-base ${getFieldError('email')
+                                                        ? 'border-red-500 focus:ring-red-500'
+                                                        : 'border-gray-300 focus:ring-[#0F3D3A]'
+                                                    }`}
                                             />
+                                            {getFieldError('email') && (
+                                                <p className="text-red-500 text-xs mt-1">{getFieldError('email')}</p>
+                                            )}
                                         </motion.div>
 
                                         <motion.div variants={itemVariants} className="space-y-2">
@@ -292,10 +362,16 @@ export default function ContactSection() {
                                                 name="phone"
                                                 value={formData.phone}
                                                 onChange={handleChange}
+                                                onBlur={() => setTouched(prev => new Set(prev).add('phone'))}
                                                 placeholder="+1 (222) 555-7890"
-                                                className="w-full px-3 py-2 border border-gray-300 bg-[#F2F5F1] rounded-[6px] focus:outline-none focus:ring-[1px] focus:ring-[#0F3D3A] transition text-sm sm:text-base"
-                                                required
+                                                className={`w-full px-3 py-2 border rounded-[6px] bg-[#F2F5F1] focus:outline-none focus:ring-[1px] transition text-sm sm:text-base ${getFieldError('phone')
+                                                        ? 'border-red-500 focus:ring-red-500'
+                                                        : 'border-gray-300 focus:ring-[#0F3D3A]'
+                                                    }`}
                                             />
+                                            {getFieldError('phone') && (
+                                                <p className="text-red-500 text-xs mt-1">{getFieldError('phone')}</p>
+                                            )}
                                         </motion.div>
                                     </motion.div>
                                 )}
@@ -331,7 +407,7 @@ export default function ContactSection() {
                                                 />
                                             </motion.div>
 
-                                           <motion.div variants={itemVariants} className="space-y-2">
+                                            <motion.div variants={itemVariants} className="space-y-2">
                                                 <label className="text-xs text-gray-600 font-medium tracking-wide">
                                                     Job Title
                                                 </label>
@@ -347,16 +423,19 @@ export default function ContactSection() {
                                         </div>
 
                                         <motion.div variants={itemVariants} className="space-y-2">
-                                            <label className="text-xs text-gray-600 font-medium tracking-wide">
-                                               Preferred Timeline *
+                                            <label htmlFor="timeline" className="text-xs text-gray-600 font-medium tracking-wide">
+                                                Preferred Timeline *
                                             </label>
                                             <select
+                                                id="timeline"
                                                 name="timeline"
-                                                aria-label="timeline"
                                                 value={formData.timeline}
                                                 onChange={handleChange}
-                                                className="w-full px-3 py-2 border border-gray-300 bg-[#F2F5F1] rounded-[6px] focus:outline-none focus:ring-[1px] focus:ring-[#0F3D3A] transition text-sm sm:text-base"
-                                                required
+                                                onBlur={() => setTouched(prev => new Set(prev).add('timeline'))}
+                                                className={`w-full px-3 py-2 border rounded-[6px] bg-[#F2F5F1] focus:outline-none focus:ring-[1px] transition text-sm sm:text-base ${getFieldError('timeline')
+                                                        ? 'border-red-500 focus:ring-red-500'
+                                                        : 'border-gray-300 focus:ring-[#0F3D3A]'
+                                                    }`}
                                             >
                                                 <option value="">Select timeline</option>
                                                 <option value="immediate">Immediate (0-3 months)</option>
@@ -364,18 +443,24 @@ export default function ContactSection() {
                                                 <option value="medium-term">Medium-term (6-12 months)</option>
                                                 <option value="planning">Just planning for future</option>
                                             </select>
+                                            {getFieldError('timeline') && (
+                                                <p className="text-red-500 text-xs mt-1">{getFieldError('timeline')}</p>
+                                            )}
                                         </motion.div>
                                         <motion.div variants={itemVariants} className="space-y-2">
-                                            <label className="text-xs text-gray-600 font-medium tracking-wide">
+                                            <label htmlFor="loanType" className="text-xs text-gray-600 font-medium tracking-wide">
                                                 I'm interested in *
                                             </label>
                                             <select
+                                                id="loanType"
                                                 name="loanType"
-                                                aria-label="Loan Type"
                                                 value={formData.loanType}
                                                 onChange={handleChange}
-                                                className="w-full px-3 py-2 border border-gray-300 bg-[#F2F5F1] rounded-[6px] focus:outline-none focus:ring-[1px] focus:ring-[#0F3D3A] transition text-sm sm:text-base"
-                                                required
+                                                onBlur={() => setTouched(prev => new Set(prev).add('loanType'))}
+                                                className={`w-full px-3 py-2 border rounded-[6px] bg-[#F2F5F1] focus:outline-none focus:ring-[1px] transition text-sm sm:text-base ${getFieldError('loanType')
+                                                        ? 'border-red-500 focus:ring-red-500'
+                                                        : 'border-gray-300 focus:ring-[#0F3D3A]'
+                                                    }`}
                                             >
                                                 <option value="">Select loan type</option>
                                                 <option value="self-employed">Self-Employed & Business Owner Lending</option>
@@ -384,6 +469,9 @@ export default function ContactSection() {
                                                 <option value="refinancing">Strategic Refinancing</option>
                                                 <option value="multiple">Multiple Services</option>
                                             </select>
+                                            {getFieldError('loanType') && (
+                                                <p className="text-red-500 text-xs mt-1">{getFieldError('loanType')}</p>
+                                            )}
                                         </motion.div>
                                     </motion.div>
                                 )}
@@ -405,12 +493,11 @@ export default function ContactSection() {
                                         </div>
 
                                         <motion.div variants={itemVariants} className="space-y-2">
-                                            <label className="text-xs text-gray-600 font-medium tracking-wide">
+                                            <label htmlFor="investmentExperience" className="text-xs text-gray-600 font-medium tracking-wide">
                                                 Investment Experience
                                             </label>
-                                            <select
+                                            <select id="investmentExperience"
                                                 name="investmentExperience"
-                                                aria-label="Investment Experience"
                                                 value={formData.investmentExperience}
                                                 onChange={handleChange}
                                                 className="w-full px-3 py-2 border border-gray-300 bg-[#F2F5F1] rounded-[6px] focus:outline-none focus:ring-[1px] focus:ring-[#0F3D3A] transition text-sm sm:text-base"
@@ -431,11 +518,17 @@ export default function ContactSection() {
                                                 name="message"
                                                 value={formData.message}
                                                 onChange={handleChange}
+                                                onBlur={() => setTouched(prev => new Set(prev).add('message'))}
                                                 placeholder="Hi Sumry Finance, I'm interested in discussing how strategic lending can help me achieve..."
                                                 rows={4}
-                                                className="w-full px-3 py-2 border border-gray-300 bg-[#F2F5F1] rounded-[6px] focus:outline-none focus:ring-[1px] focus:ring-[#0F3D3A] transition resize-none text-sm sm:text-base"
-                                                required
+                                                className={`w-full px-3 py-2 border rounded-[6px] bg-[#F2F5F1] focus:outline-none focus:ring-[1px] transition resize-none text-sm sm:text-base ${getFieldError('message')
+                                                        ? 'border-red-500 focus:ring-red-500'
+                                                        : 'border-gray-300 focus:ring-[#0F3D3A]'
+                                                    }`}
                                             />
+                                            {getFieldError('message') && (
+                                                <p className="text-red-500 text-xs mt-1">{getFieldError('message')}</p>
+                                            )}
                                         </motion.div>
                                     </motion.div>
                                 )}
@@ -460,18 +553,19 @@ export default function ContactSection() {
                                 {/* Next/Submit Button */}
                                 <motion.button
                                     type={currentStep === 3 ? "submit" : "button"}
-                                    onClick={currentStep === 3 ? null : nextStep}
+                                    onClick={currentStep === 3 ? undefined : nextStep}
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                     className={`group flex items-center gap-3 ml-auto px-6 py-3 cursor-pointer rounded-[6px] font-medium text-sm transition ${submitted
-                                        ? "bg-[#C8F8A9] text-[#0F3D3A] hover:text-white hover:bg-[#0F3D3A]"
-                                        : "bg-[#C8F8A9] text-[#0F3D3A] hover:text-white hover:bg-[#0F3D3A]"
+                                            ? "bg-[#C8F8A9] text-[#0F3D3A] hover:text-white hover:bg-[#0F3D3A]"
+                                            : "bg-[#C8F8A9] text-[#0F3D3A] hover:text-white hover:bg-[#0F3D3A]"
                                         }`}
+                                    disabled={submitted}
                                 >
                                     <span>
                                         {currentStep === 3 ? (submitted ? "Message Sent!" : "Submit Application") : "Next Step"}
                                     </span>
-                                    {currentStep !== 3 && (
+                                    {currentStep !== 3 && !submitted && (
                                         <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                                     )}
                                 </motion.button>
@@ -491,7 +585,6 @@ export default function ContactSection() {
                             </motion.p>
                         </form>
                     </motion.div>
-
                 </div>
             </div>
         </section>

@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Quiz() {
-   useEffect(() => {
-          window.scrollTo(0, 0);
-      }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [step, setStep] = useState(1);
+  const [showPopup, setShowPopup] = useState(false);
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     goal: "",
@@ -44,14 +46,14 @@ export default function Quiz() {
   );
 
   return (
-    <div className="min-h-screen bg-[#F7F7F7] px-6 py-20 flex justify-center">
+    <div className="min-h-screen bg-[#F7F7F7] px-6 py-20 flex justify-center items-center">
       <div className="w-full max-w-2xl my-10">
-         {/* Breadcrumb */}
-                        <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
-                          <Link to="/" className="hover:text-[#0F3D3A] transition-colors">Home</Link>
-                          <span>›</span>
-                          <span className="text-[#0F3D3A] font-medium">Lead Magnet Quiz</span>
-                        </nav>
+        {/* Breadcrumb */}
+        <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
+          <Link to="/" className="hover:text-[#0F3D3A] transition-colors">Home</Link>
+          <span>›</span>
+          <span className="text-[#0F3D3A] font-medium">Lead Magnet Quiz</span>
+        </nav>
 
         {/* Progress Bar */}
         <div className="mb-10">
@@ -242,43 +244,104 @@ export default function Quiz() {
           {step === 8 &&
             fieldWrapper(
               <>
-                <h2 className="text-xl font-semibold mb-6">
-                  Contact Details
-                </h2>
+                <h2 className="text-xl font-semibold mb-6">Contact Details</h2>
 
+                {/* Name */}
                 <input
                   type="text"
                   placeholder="Full name"
                   value={form.name}
-                  onChange={(e) => update("name", e.target.value)}
-                  className="w-full p-4 border rounded-xl mb-4"
+                  onChange={(e) =>
+                    update("name", e.target.value.replace(/[0-9]/g, ""))
+                  }
+                  className={`w-full p-4 border rounded-xl mb-1 ${form.name.trim() === "" ? "border-red-500" : "border-gray-300"
+                    }`}
                 />
 
+                {form.name.trim() === "" && (
+                  <p className="text-red-500 text-sm mb-3">Name is required.</p>
+                )}
+
+                {/* Email */}
                 <input
                   type="email"
                   placeholder="Email address"
                   value={form.email}
                   onChange={(e) => update("email", e.target.value)}
-                  className="w-full p-4 border rounded-xl mb-4"
+                  className={`w-full p-4 border rounded-xl mb-1 ${!/^\S+@\S+\.\S+$/.test(form.email)
+                    ? "border-red-500"
+                    : "border-gray-300"
+                    }`}
                 />
+                {!/^\S+@\S+\.\S+$/.test(form.email) && form.email !== "" && (
+                  <p className="text-red-500 text-sm mb-3">
+                    Please enter a valid email.
+                  </p>
+                )}
 
+                {/* Phone */}
                 <input
                   type="tel"
                   placeholder="Phone number"
                   value={form.phone}
                   onChange={(e) => update("phone", e.target.value)}
-                  className="w-full p-4 border rounded-xl mb-6"
+                  className={`w-full p-4 border rounded-xl mb-1 ${!/^\d{10}$/.test(form.phone)
+                    ? "border-red-500"
+                    : "border-gray-300"
+                    }`}
                 />
+                {!/^\d{10}$/.test(form.phone) && form.phone !== "" && (
+                  <p className="text-red-500 text-sm mb-3">
+                    Enter a valid 10-digit phone number.
+                  </p>
+                )}
 
-                <button
-                  onClick={() => alert("Form Submitted!")}
-                  disabled={!form.name || !form.email || !form.phone}
-                  className="w-full bg-[#272727] text-white p-4 rounded-xl disabled:opacity-40"
+                {/* Button */}
+                <button type="submit"
+                  onClick={() => setShowPopup(true)}
+                  disabled={
+                    form.name.trim() === "" ||
+                    !/^\S+@\S+\.\S+$/.test(form.email) ||
+                    !/^\d{10}$/.test(form.phone)
+                  }
+                  className="w-full bg-[#272727] text-white p-4 rounded-xl disabled:opacity-40 mt-2"
                 >
                   Submit Profile
                 </button>
               </>
             )}
+          {showPopup && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[999]"
+              onClick={() => setShowPopup(false)}
+            >
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                className="bg-white rounded-2xl p-8 w-[90%] max-w-md text-center shadow-xl"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <h2 className="text-2xl font-semibold mb-2">Profile Submitted!</h2>
+                <p className="text-gray-600 mb-6">
+                  Thanks! Our team will reach out shortly.
+                </p>
+
+                <button type="button"
+                  onClick={() => { setShowPopup(false);
+                    navigate("/"); 
+                  }}
+                  className="w-full bg-[#272727] text-white py-3 rounded-xl"
+                >
+                  Close
+                </button>
+              </motion.div>
+            </motion.div>
+          )}
+
         </AnimatePresence>
 
         {/* Back Button */}

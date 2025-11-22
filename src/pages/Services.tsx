@@ -2,50 +2,9 @@ import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import { services } from "@/components/data";
 
 export default function ServicesSection() {
-  const services = [
-    {
-      id: "self-employed-lending",
-      title: "Self-Employed & Business Owner Lending",
-      desc: "Specialist lending solutions built on deep financial analysis. Leverages accounting expertise to interpret financials, cash flow, tax structures, and business performance. Designed to give self-employed borrowers clearer pathways and stronger, more strategic lending outcomes.",
-      img: "https://placehold.co/600x400",
-      icon: "/service1.svg",
-      benefits: ['Benefit 1', 'Benefit 2', 'Benefit 3']
-    },
-    {
-      id: "home-loans",
-      title: "Owner-Occupied Home Loans",
-      desc: "Structured home loan solutions focused on reducing interest and accelerating debt reduction. Goes beyond rate-shopping — uses features, cash flow optimisation, and smart structuring to help clients get ahead faster.",
-      img: "https://placehold.co/600x400",
-      icon: "/service2.svg",
-      benefits: ['Benefit 1', 'Benefit 2', 'Benefit 3']
-    },
-    {
-      id: "investment-loans",
-      title: "Smart Investment Loan Options",
-      desc: "Strategic lending for new and experienced property investors. Helps clients understand how loan structures support growth, cash flow, and long-term investment plans. Works alongside accountants to ensure alignment with broader financial strategies.",
-      img: "https://placehold.co/600x400",
-      icon: "/service3.svg",
-      benefits: ['Benefit 1', 'Benefit 2', 'Benefit 3']
-    },
-    {
-      id: "loan-refinancing",
-      title: "Strategic Loan Refinancing",
-      desc: "A full structural review rather than a simple rate comparison. Models multiple structure options to reduce interest, increase flexibility, and shorten the life of the loan. Combines competitive rates with smarter long-term design.",
-      img: "https://placehold.co/600x400",
-      icon: "/service4.svg",
-      benefits: ['Benefit 1', 'Benefit 2', 'Benefit 3']
-    },
-    {
-      id: "personal-loans",
-      title: "Personal Loans Finance",
-      desc: "Flexible lending options for vehicles, equipment, and personal purchases. Advises clients on choices that fit within their long-term borrowing strategy and financial plan.",
-      img: "https://placehold.co/600x400",
-      icon: "/service5.svg",
-      benefits: ['Benefit 1', 'Benefit 2', 'Benefit 3']
-    },
-  ];
 
    useEffect(() => {
           window.scrollTo(0, 0);

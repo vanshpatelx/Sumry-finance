@@ -46,8 +46,8 @@ export default function Navbar() {
         }
       `}
     >
-      <div className="max-w-6xl 2xl:max-w-7xl 2xl:max-w-8xl mx-auto px-4 md:px-8 lg:px-10 xl:px-0 2xl:px-8">
-        <div className="flex items-center justify-between h-18 2xl:h-24">
+      <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-10 xl:px-0 2xl:px-0">
+        <div className="flex items-center justify-between h-18 2xl:h-18">
           
           {/* LOGO */}
           <motion.div
