@@ -79,13 +79,15 @@ function ServiceSection({ service, isReversed }) {
       {/* Content Section */}
       <div className="flex-1 space-y-6 order-1 sm:order-0">
         {/* Badge/Icon */}
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-12 h-12 rounded-[8px] flex items-center justify-center">
+        <div className="flex items-center gap-3 mb-4 ">
+          <div className="flex items-center gap-3 mb-4">
+          <div className="w-12 h-12 rounded-[8px] bg-[#0F3D3A] flex items-center justify-center">
             <img 
               src={service.icon} 
               alt={service.title}
               className="w-6 h-6 filter brightness-0 invert"
             />
+          </div>
           </div>
           <span className="px-3 py-1 bg-[#EBEBEB] text-[#0F3D3A] rounded-full text-sm font-medium">
             {service.tag}
