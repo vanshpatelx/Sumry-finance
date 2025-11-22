@@ -14,10 +14,10 @@ export default function Navbar() {
   const navItems = [
     { label: "Home", route: "/" },
     { label: "About",  route: "/about" },
-    { label: "Service",  route: "/services" },
-    { label: "Contact", route: "/contact" },
+    { label: "Services",  route: "/services" },
     { label: "Savings Calculator", route: "/calculator" },
-    { label: "Quiz", route: "/quiz" }
+    { label: "Quiz", route: "/quiz" },
+    { label: "Contact", route: "/contact" },
   ];
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function Navbar() {
   }, []);
 
   const isHomePage = location.pathname === '/';
-  
+  const isContactPage = location.pathname === '/contact';
   const shouldShowGrayBackground = !isHomePage || isScrolled || isMenuOpen;
   const shouldShowWhiteText = isHomePage && !isScrolled && !isMenuOpen;
 
@@ -54,6 +54,7 @@ export default function Navbar() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
+            onClick={() => navigate('/')}
             className={`relative inline-flex items-end gap-1.5 shrink-0 text-2xl 2xl:text-3xl font-light 
               ${shouldShowWhiteText ? "text-white" : "text-black"}`}
           >
@@ -94,28 +95,31 @@ export default function Navbar() {
           </motion.div>
 
           {/* DESKTOP CTA */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="hidden lg:flex items-center space-x-4 2xl:space-x-6"
-          >
-            <button
-              type='button'
-              onClick={() => navigate('/contact')}
-              className={`
-                px-3.5 py-2 2xl:px-5 2xl:py-3 rounded-[8px] text-sm 2xl:text-base 
-                font-medium transition-colors cursor-pointer
-                ${
-                  shouldShowWhiteText
-                    ? "bg-white text-[#272727] hover:bg-[#0F3D3A] hover:text-white"
-                    : "bg-white text-[#272727] border border-[#272727] hover:bg-[#0F3D3A] hover:text-white hover:border-[#0F3D3A]"
-                }
-              `}
+           {!isContactPage && (
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="hidden lg:flex items-center space-x-4 2xl:space-x-6"
             >
-              Get Strategy
-            </button>
-          </motion.div>
+              <button
+                type='button'
+                onClick={() => navigate('/contact')}
+                className={`
+                  px-3.5 py-2 2xl:px-5 2xl:py-3 rounded-[8px] text-sm 2xl:text-base 
+                  font-medium transition-colors cursor-pointer
+                  ${
+                    shouldShowWhiteText
+                      ? "bg-white text-[#272727] hover:bg-[#0F3D3A] hover:text-white"
+                      : "bg-white text-[#272727] border border-[#272727] hover:bg-[#0F3D3A] hover:text-white hover:border-[#0F3D3A]"
+                  }
+                `}
+              >
+                Get Strategy
+              </button>
+            </motion.div>
+          )}
+
 
           {/* MOBILE MENU BUTTON */}
           <motion.button
@@ -146,21 +150,26 @@ export default function Navbar() {
                 key={item.label}
                 to={item.route}
                 onClick={() => setIsMenuOpen(false)}
-                className="block text-sm font-medium p-0.5 px-2.5 rounded-full text-[#272727] w-fit transition-colors hover:text-white hover:bg-[#272727]"
+                className="block text-[16px] font-medium p-0.5 px-2.5 rounded-full text-[#272727] w-fit transition-colors hover:text-white hover:bg-[#272727]"
               >
                 {item.label}
               </Link>
             ))}
 
-            <div className="flex gap-3 pt-4">
-              <button
-               onClick={() => navigate('/contact')}
-                type="button"
-                className="px-4 py-2 rounded-[8px] border border-gray-600 bg-black text-white hover:bg-[#0F3D3A] w-full text-sm font-medium"
-              >
-                Get Strategy
-              </button>
-            </div>
+           {!isContactPage && (
+              <div className="flex gap-3 pt-4">
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigate('/contact');
+                    setIsMenuOpen(false);
+                  }}
+                  className="px-4 py-2 rounded-[8px] border border-gray-600 bg-black text-white hover:bg-[#0F3D3A] cursor-pointer text-sm font-medium w-full text-center"
+                >
+                  Get Strategy
+                </button>
+              </div>
+            )}
           </motion.div>
         )}
       </div>

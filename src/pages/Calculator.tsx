@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 export default function Calculator() {
   const [loanAmount, setLoanAmount] = useState(0);
@@ -21,6 +22,10 @@ export default function Calculator() {
     return Math.max(0, Math.round(yearlySavings));
   };
 
+   useEffect(() => {
+          window.scrollTo(0, 0);
+      }, []);
+
   return (
     <div className="min-h-screen bg-[#F7F7F7] py-24 px-6 md:px-12">
       <motion.div
@@ -29,9 +34,15 @@ export default function Calculator() {
         transition={{ duration: 0.5 }}
         className="max-w-4xl mx-auto bg-white shadow-lg rounded-2xl p-8 md:p-12"
       >
+        {/* Breadcrumb */}
+                <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
+                  <Link to="/" className="hover:text-[#0F3D3A] transition-colors">Home</Link>
+                  <span>›</span>
+                  <span className="text-[#0F3D3A] font-medium">Saving Calculator</span>
+                </nav>
         {/* HEADER */}
-        <h1 className="text-3xl md:text-4xl font-bold text-[#272727]">
-          Structure Savings Calculator™
+        <h1 className="heading text-2xl sm:text-3xl md:text-4xl leading-tighter font-medium tracking-wide text-[#0F3D3A]">
+          Structure Savings Calculator <sup className="text-xl">™</sup>
         </h1>
         <p className="text-[#555] mt-2 text-base md:text-lg">
           Estimate the benefits of a smarter loan structure.
@@ -47,7 +58,7 @@ export default function Calculator() {
             </label>
             <input
               type="number"
-              className="w-full p-3 border rounded-lg"
+              className="w-full p-3 border rounded-[8px]"
               value={loanAmount}
               onChange={(e) => setLoanAmount(Number(e.target.value))}
               placeholder="e.g., 500000"
@@ -61,7 +72,7 @@ export default function Calculator() {
             </label>
             <input
               type="number"
-              className="w-full p-3 border rounded-lg"
+              className="w-full p-3 border rounded-[8px]"
               value={interestRate}
               onChange={(e) => setInterestRate(Number(e.target.value))}
               placeholder="e.g., 5.5"
@@ -80,7 +91,7 @@ export default function Calculator() {
               max="40"
               value={remainingYears}
               onChange={(e) => setRemainingYears(Number(e.target.value))}
-              className="w-full"
+              className="w-full custom-range"
             />
           </div>
 
@@ -92,7 +103,7 @@ export default function Calculator() {
             <input
               id="Repayment"
               type="number"
-              className="w-full p-3 border rounded-lg"
+              className="w-full p-3 border rounded-[8px]"
               value={monthlyRepayment}
               onChange={(e) => setMonthlyRepayment(Number(e.target.value))}
               placeholder="e.g., 2500"
@@ -111,7 +122,7 @@ export default function Calculator() {
               step="50"
               value={extraCash}
               onChange={(e) => setExtraCash(Number(e.target.value))}
-              className="w-full"
+              className="w-full custom-range"
             />
           </div>
 
@@ -122,7 +133,7 @@ export default function Calculator() {
               id="intent"
               value={intent}
               onChange={(e) => setIntent(e.target.value)}
-              className="w-full p-3 border rounded-lg"
+              className="w-full p-3 border rounded-[8px]"
             >
               <option>Owner-occupied</option>
               <option>Investment</option>
@@ -138,7 +149,7 @@ export default function Calculator() {
               id="currentLoan"
               value={structure}
               onChange={(e) => setStructure(e.target.value)}
-              className="w-full p-3 border rounded-lg"
+              className="w-full p-3 border rounded-[8px]"
             >
               <option>Single split</option>
               <option>Multiple splits</option>
@@ -154,7 +165,7 @@ export default function Calculator() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="mt-12 p-6 bg-[#272727] text-white rounded-xl"
+          className="mt-12 p-6 bg-[#0F3D3A] text-[#EBEBEB] rounded-xl"
         >
           <h2 className="text-xl font-semibold">
             Your Estimated Savings

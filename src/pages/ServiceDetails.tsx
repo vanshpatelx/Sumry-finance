@@ -1,54 +1,15 @@
 import { motion } from "framer-motion";
 import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { services } from "@/components/data";
 
 export default function ServiceDetails() {
   const { serviceId } = useParams();
- useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
-  const services = [
-    {
-      id: "self-employed-lending",
-      title: "Self-Employed & Business Owner Lending",
-      desc: "Specialist lending solutions built on deep financial analysis. Leverages accounting expertise to interpret financials, cash flow, tax structures, and business performance. Designed to give self-employed borrowers clearer pathways and stronger, more strategic lending outcomes.",
-      img: "https://placehold.co/600x400",
-      icon: "/service1.svg",
-      benefits: ['Benefit 1', 'Benefit 2', 'Benefit 3'],
-      detailedDesc: `Our Self-Employed & Business Owner Lending service is specifically designed for entrepreneurs, freelancers, and business owners who face unique challenges when seeking financing. We understand that traditional lending criteria often don't account for the financial realities of self-employed individuals.
 
-We conduct deep financial analysis that goes beyond standard income verification, examining your business cash flow, tax structures, and overall financial health to present your case in the strongest possible light to lenders.`,
-      features: [
-        "Comprehensive financial analysis",
-        "Cash flow assessment",
-        "Tax structure optimization",
-        "Business performance evaluation",
-        "Lender negotiation and presentation"
-      ]
-    },
-    {
-      id: "home-loans",
-      title: "Owner-Occupied Home Loans",
-      desc: "Structured home loan solutions focused on reducing interest and accelerating debt reduction. Goes beyond rate-shopping — uses features, cash flow optimisation, and smart structuring to help clients get ahead faster.",
-      img: "https://placehold.co/600x400",
-      icon: "/service2.svg",
-      benefits: ['Benefit 1', 'Benefit 2', 'Benefit 3'],
-      detailedDesc: `Our Owner-Occupied Home Loans service takes a strategic approach to home financing. We believe that finding the right home loan involves more than just comparing interest rates - it's about structuring your mortgage to align with your long-term financial goals and lifestyle aspirations.
-
-We analyze your complete financial picture to recommend loan structures that minimize interest payments, accelerate equity building, and provide the flexibility you need for life's changes.`,
-      features: [
-        "Interest rate optimization",
-        "Debt reduction strategies",
-        "Cash flow management",
-        "Loan feature selection",
-        "Long-term financial planning"
-      ]
-    },
-    // Add similar detailed data for other services...
-  ];
-
-  
   const service = services.find(s => s.id === serviceId);
 
 
@@ -59,7 +20,7 @@ We analyze your complete financial picture to recommend loan structures that min
         <div className="text-center">
           <h1 className="text-4xl font-bold text-[#0F3D3A] mb-4">Service Not Found</h1>
           <p className="text-gray-600 mb-6">The service you're looking for doesn't exist.</p>
-          <Link to="/services" className="px-6 py-3 bg-[#0F3D3A] text-white rounded-lg hover:bg-[#0f3d3adc] transition-colors">
+          <Link to="/services" className="px-6 py-3 bg-[#0F3D3A] text-white rounded-[8px] hover:bg-[#0f3d3adc] transition-colors">
             Back to Services
           </Link>
         </div>
@@ -70,7 +31,7 @@ We analyze your complete financial picture to recommend loan structures that min
   return (
     <div className="min-h-screen bg-[#F7F7F7] pt-24">
       <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-10 xl:px-0 py-16">
-        
+
         {/* Breadcrumb */}
         <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
           <Link to="/" className="hover:text-[#0F3D3A] transition-colors">Home</Link>
@@ -95,7 +56,7 @@ We analyze your complete financial picture to recommend loan structures that min
             />
             <div>
               <span className="px-3 py-1 text-sm bg-[#EBEBEB] text-[#0F3D3A] rounded-full">
-                Service
+                {service.tag}
               </span>
               <h1 className="heading text-4xl sm:text-5xl font-normal text-[#0F3D3A] mt-2">
                 {service.title}
@@ -111,7 +72,7 @@ We analyze your complete financial picture to recommend loan structures that min
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="space-y-8"
+            className="space-y-8 order-1 sm:order-0"
           >
             <div className="space-y-4">
               <h2 className="text-3xl font-semibold text-[#0F3D3A]">Service Overview</h2>
@@ -136,7 +97,7 @@ We analyze your complete financial picture to recommend loan structures that min
               <h2 className="text-3xl font-semibold text-[#0F3D3A]">Benefits</h2>
               <div className="grid grid-cols-2 gap-4">
                 {service.benefits.map((benefit, index) => (
-                  <div key={index} className="flex items-center gap-3 bg-white p-4 rounded-lg shadow-sm">
+                  <div key={index} className="flex items-center gap-3 bg-white p-4 rounded-[8px] shadow-sm">
                     <span className="w-2 h-2 rounded-full bg-[#C8F8A9] flex-shrink-0"></span>
                     <span className="text-gray-700 font-medium">{benefit}</span>
                   </div>
@@ -150,7 +111,7 @@ We analyze your complete financial picture to recommend loan structures that min
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="space-y-8"
+            className="space-y-8 order-0 sm:order-1"
           >
             <div className="relative h-80 rounded-2xl overflow-hidden shadow-xl">
               <img
@@ -167,10 +128,10 @@ We analyze your complete financial picture to recommend loan structures that min
                 Ready to learn more about how {service.title} can help you achieve your financial goals?
               </p>
               <div className="space-y-3">
-                <button className="w-full px-6 py-3 rounded-lg bg-[#0F3D3A] text-white hover:bg-[#0f3d3adc] transition-colors font-medium">
+                <button className="w-full px-6 py-3 rounded-[8px] bg-[#0F3D3A] text-white hover:bg-[#0f3d3adc] transition-colors font-medium">
                   Schedule Consultation
                 </button>
-                <button className="w-full px-6 py-3 rounded-lg border border-[#0F3D3A] text-[#0F3D3A] hover:bg-[#0F3D3A] hover:text-white transition-colors font-medium">
+                <button className="w-full px-6 py-3 rounded-[8px] border border-[#0F3D3A] text-[#0F3D3A] hover:bg-[#0F3D3A] hover:text-white transition-colors font-medium">
                   Download Brochure
                 </button>
               </div>
@@ -194,7 +155,7 @@ We analyze your complete financial picture to recommend loan structures that min
                 <Link
                   key={relatedService.id}
                   to={`/services/${relatedService.id}`}
-                  className="p-4 rounded-lg border border-gray-200 hover:border-[#0F3D3A] hover:bg-[#F7F7F7] transition-colors group"
+                  className="p-4 rounded-[8px] border border-gray-200 hover:border-[#0F3D3A] hover:bg-[#F7F7F7] transition-colors group"
                 >
                   <h3 className="font-semibold text-[#0F3D3A] group-hover:text-[#0f3d3adc]">
                     {relatedService.title}

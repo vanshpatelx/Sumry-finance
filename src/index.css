@@ -30,3 +30,9 @@ html {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+.custom-range {
+  accent-color: #0F3D3A; /* YOUR color */
+}
+.custom-range:hover {
+  accent-color: #0f3d3ade; /* YOUR color */
+}

@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { Phone, MapPin, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { containerVariants, itemVariants, slideInFromLeft, slideInFromRight, stepVariants } from "@/components/data";
+
 
 export default function ContactSection() {
     const [currentStep, setCurrentStep] = useState(1);
@@ -22,28 +24,9 @@ export default function ContactSection() {
         investmentExperience: ''
     });
 
-    const containerVariants: Variants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.2,
-                delayChildren: 0.3,
-            },
-        },
-    };
-
-    const itemVariants: Variants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: 0.8,
-                ease: [0.16, 1, 0.3, 1],
-            },
-        },
-    };
+     useEffect(() => {
+            window.scrollTo(0, 0);
+        }, []);
 
     const [submitted, setSubmitted] = useState(false);
 
@@ -71,32 +54,6 @@ export default function ContactSection() {
 
     // Progress bar calculation
     const progress = (currentStep / 3) * 100;
-
-    // Animation variants
-    const stepVariants = {
-        enter: { x: 300, opacity: 0 },
-        center: { x: 0, opacity: 1 },
-        exit: { x: -300, opacity: 0 }
-    };
-
-
-    const slideInFromLeft: Variants = {
-        hidden: { opacity: 0, x: -50 },
-        visible: {
-            opacity: 1,
-            x: 0,
-            transition: { duration: 0.7, ease: "easeOut" },
-        },
-    };
-
-    const slideInFromRight: Variants = {
-        hidden: { opacity: 0, x: 50 },
-        visible: {
-            opacity: 1,
-            x: 0,
-            transition: { duration: 0.7, ease: "easeOut" },
-        },
-    };
 
     return (
         <section id="contact" className="relative w-full h-full bg-[#F7F7F7] py-12 md:py-24 md:pb-48 px-4 md:px-8 lg:px-10 xl:px-0 overflow-hidden">

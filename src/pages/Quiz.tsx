@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Quiz() {
+   useEffect(() => {
+          window.scrollTo(0, 0);
+      }, []);
   const [step, setStep] = useState(1);
 
   const [form, setForm] = useState({
@@ -40,7 +45,13 @@ export default function Quiz() {
 
   return (
     <div className="min-h-screen bg-[#F7F7F7] px-6 py-20 flex justify-center">
-      <div className="w-full max-w-2xl">
+      <div className="w-full max-w-2xl my-10">
+         {/* Breadcrumb */}
+                        <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
+                          <Link to="/" className="hover:text-[#0F3D3A] transition-colors">Home</Link>
+                          <span>›</span>
+                          <span className="text-[#0F3D3A] font-medium">Lead Magnet Quiz</span>
+                        </nav>
 
         {/* Progress Bar */}
         <div className="mb-10">
@@ -50,7 +61,7 @@ export default function Quiz() {
           </div>
 
           <div className="w-full bg-gray-300 h-2 rounded-full">
-            <div className="bg-[#272727] h-2 rounded-full"
+            <div className="bg-[#0F3D3A] h-2 rounded-full"
               style={{ width: `${(step / totalSteps) * 100}%` }}
             />
           </div>
@@ -272,12 +283,16 @@ export default function Quiz() {
 
         {/* Back Button */}
         {step > 1 && step < 8 && (
-          <button type="button"
+          <motion.button
+            type="button"
             onClick={prev}
-            className="mt-6 text-[#272727] underline"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="flex items-center gap-2 px-4 py-3 text-[#0F3D3A] hover:bg-white rounded-[6px] transition-colors font-medium text-sm mt-4"
           >
+            <ChevronLeft className="w-4 h-4" />
             Back
-          </button>
+          </motion.button>
         )}
       </div>
     </div>

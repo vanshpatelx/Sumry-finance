@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function ServicesSection() {
   const services = [
@@ -45,6 +46,10 @@ export default function ServicesSection() {
       benefits: ['Benefit 1', 'Benefit 2', 'Benefit 3']
     },
   ];
+
+   useEffect(() => {
+          window.scrollTo(0, 0);
+      }, []);
 
   return (
     <section id="service" className="max-w-6xl mx-auto px-4 md:px-8 lg:px-10 xl:px-0 py-24">

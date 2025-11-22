@@ -12,8 +12,8 @@ import Calculator from './pages/Calculator.tsx'
 import Quiz from './pages/Quiz.tsx'
 import AboutSection from './pages/About.tsx'
 import ServicesSection from './pages/Services.tsx'
-import ServiceDetails from './pages/ServicesPage.tsx'
-import ScrollToTop from './components/ScrollToTop.tsx'
+import ServiceDetails from './pages/ServiceDetails.tsx'
+import ServicesPage from './pages/ServicePage.tsx'
 
 function App() {
 
@@ -28,7 +28,6 @@ function App() {
             path="/"
             element={
               <>
-                <ScrollToTop />
                 <Hero />
                 <LogoMarquee />
                 <AboutSection />
@@ -41,7 +40,7 @@ function App() {
 
           {/* INDIVIDUAL PAGE ROUTES */}
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/services" element={<Services />} />
+          <Route path="/services" element={<ServicesPage />} />
           <Route path="/contact" element={<ContactSection />} />
           <Route path="/calculator" element={<Calculator />} />
           <Route path="/quiz" element={<Quiz />} />

@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion'
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom'
+import TeamSection from './Teams'
+import { ChevronRight } from 'lucide-react';
 
 function AboutPage() {
     useEffect(() => {
@@ -9,7 +11,22 @@ function AboutPage() {
     return (
         <div className="min-h-screen bg-[#F7F7F7] pt-24">
             <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-10 xl:px-0 py-16">
-
+                {/* Breadcrumb */}
+                <motion.nav
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="flex items-center space-x-2 text-sm text-gray-600 mb-8"
+                >
+                    <Link
+                        to="/"
+                        className="hover:text-[#0F3D3A] transition-colors flex items-center gap-1"
+                    >
+                        <span>Home</span>
+                    </Link>
+                    <ChevronRight className="w-4 h-4" />
+                    <span className="text-[#0F3D3A] font-medium">About Us</span>
+                </motion.nav>
                 {/* Header Section */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -110,13 +127,14 @@ function AboutPage() {
                         </div>
                     </motion.div>
                 </div>
+                <TeamSection />
 
                 {/* CTA Section */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7, delay: 0.4 }}
-                    className="bg-[#0F3D3A] rounded-2xl p-8 text-center text-white"
+                    className="bg-[#0F3D3A] rounded-2xl p-8 text-center text-white mt-12"
                 >
                     <h2 className="text-3xl font-semibold mb-4">Ready to Get Started?</h2>
                     <p className="text-lg text-gray-300 mb-6 max-w-2xl mx-auto">

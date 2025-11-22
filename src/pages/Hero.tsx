@@ -4,55 +4,11 @@ import { motion } from 'framer-motion'
 import { ArrowRight} from 'lucide-react'
 import { Variants } from "framer-motion";
 import Navbar from './Navbar';
+import { badgeVariants, containerVariants, imageVariants, itemVariants } from '@/components/data';
+import { useNavigate } from 'react-router-dom';
 
 export default function Hero() {
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.16, 1, 0.3, 1], // easeOut
-      },
-    },
-  };
-
-  const badgeVariants: Variants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: [0.16, 1, 0.3, 1],
-      },
-    },
-  };
-
-  const imageVariants: Variants = {
-    hidden: { opacity: 0, x: 100 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 1,
-        ease: [0.16, 1, 0.3, 1],
-      },
-    },
-  };
+  const navigate = useNavigate();
 
   return (
     <div id='home' className="relative min-h-screen 2xl:min-h-[90vh] text-[#F7F7F7] overflow-hidden">
@@ -117,6 +73,7 @@ export default function Hero() {
               <motion.button
                 type='button'
                 variants={itemVariants}
+                onClick={() => navigate('/contact')}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.95 }}
                 className="group flex items-center gap-3 px-3.5 py-2.5 2xl:px-5 2xl:py-3.5 bg-[#F7F7F7] text-black rounded-[8px] text-[14px] 2xl:text-base font-medium hover:bg-[#C8F8A9] hover:text-[#0F3D3A] transition-colors cursor-pointer"
