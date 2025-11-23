@@ -116,7 +116,7 @@ export default function ContactSection() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-100px" }}
-                className="max-w-6xl mx-auto mb-12 md:mb-24"
+                className="max-w-6xl mx-auto mb-12 md:mb-24 2xl:mt-20"
             >
                 <motion.div variants={itemVariants}>
                     <span className="px-3 py-1 text-sm bg-[#EBEBEB] text-[#0F3D3A] rounded-full">
